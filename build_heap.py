@@ -25,9 +25,12 @@ def sift_down(i, n, data, swaps):
 
 
 def main():
-    input_type = input().strip()
     #
     input_type = input("Enter I for keyboard input or F for file input: ")
+
+    if input_type not in ['I', 'F']:
+        print("Invalid input type")
+        return
     #
     if input_type == 'I':
         n = int(input())
@@ -39,11 +42,6 @@ def main():
         with open(file_name, "r") as f:
             n = int(f.readline())
             data = list(map(int, f.readline().split()))
-
-    else:
-        print("Invalid input type")
-        return
-    
 
     assert len(data) == n
     assert len(data) == len(set(data))
