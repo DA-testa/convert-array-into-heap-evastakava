@@ -1,27 +1,30 @@
-#python3
+def parent(i):
+    return (i - 1) // 2
 
-def build_heap(data):
+def left_child(i):
+    return 2 * i + 1
+
+def right_child(i):
+    return 2 * i + 2
+
+def sift_down(i, n, a, swaps):
+    min_index = i
+    l = left_child(i)
+    if l < n and a[l] < a[min_index]:
+        min_index = l
+    r = right_child(i)
+    if r < n and a[r] < a[min_index]:
+        min_index = r
+    if i != min_index:
+        a[i], a[min_index] = a[min_index], a[i]
+        swaps.append((i, min_index))
+        sift_down(min_index, n, a, swaps)
+
+def build_heap(a):
     swaps = []
-    # TODO: Creat heap and heap sort
-    # try to achieve  O(n) and not O(n2)
-    n = len(data)
-
-    for i in range(n // 2, -1, -1):
-        j = 1
-        while True:
-            left_child = 2*j+1
-            right_child = 2*j+2
-            if left_child < n and data[left_child] > data [j]:
-                j = left_child
-            if right_child < n and data[right_child] > data[j]:
-                j = right_child
-            if i != j:
-                data[i], data[j] = data[j], data[i]
-                swaps.append((i, j))
-                i = j
-            else:
-                break
-
+    n = len(a)
+    for i in range(parent(n-1), -1, -1):
+        sift_down(i, n, a, swaps)
     return swaps
 
 
@@ -39,43 +42,33 @@ def main():
 
     elif input_type == 'F':
         file_name = input("Enter file name: ")
-        try:
-            with open(file_name, "r") as f:
-                n = int(f.readline())
-                data = list(map(int, f.readline().split()))
 
-        except:
-            print("Error reading or parsing file")
-            return
+        with open(file_name, "r") as f:
+            n = int(f.readline())
+            data = list(map(int, f.readline().split()))
 
     else:
         print("Invalid input type")
         return
 
-    # checks if lenght of data is the same as the said lenght
-    if len(data) != n:
-        print("Number of elements does not match stated lenght")
-        return
-    if len(data) != len(set(data)):
-        print("Duplicate elements found in data")
-        return
+    # checks if length of data is the same as the said length
+    assert len(data) == n
+    assert len(data) == len(set(data))
 
     # calls function to assess the data 
     # and give back all swaps
     swaps = build_heap(data)
 
-    # TODO: output how many swaps were made, 
-    print(f"Number of swaps made: {len(swaps)}")
+    # output how many swaps were made
+    print(len(swaps))
 
     # this number should be less than 4n (less than 4*len(data))
-    if len(swaps) > 4*n:
-        print("Number of swaps exceeds 4n")
-        return
+    assert len(swaps) <= 4*n, "Number of swaps exceeds 4n"
 
     # output all swaps
 
     for i, j in swaps:
-        print(f"Swaps {i} with {j}")
+        print(i, j)
 
 if __name__ == "__main__":
     main()
