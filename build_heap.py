@@ -1,71 +1,53 @@
-# python3
-
+#python3
 
 def build_heap(data):
     swaps = []
     n = len(data)
 
-    # TODO: Creat heap and heap sort
-    # try to achieve  O(n) and not O(n2)
-
     for i in range(n // 2, -1, -1):
-        shift_down(i, data, swaps)
-
-
+        sift_down(i, data, swaps)
+    
     return swaps
 
 
-def shift_down(i, data, swaps):
-    n= len(data)
+def sift_down(i, data, swaps):
+
+    left_child = 2 * i + 1
+    right_child = 2 * i + 2
     min_index = i
-
-    left = 2 * i + 1
-    if left < n and data[left] < data[min_index]:
-        min_index = left
-
-    right = 2 * i + 2
-    if right < n and data[right] < data[min_index]:
-        min_index = right
+    if left_child < len(data) and data[left_child] < data[min_index]:
+        min_index = left_child
+    if right_child < len(data) and data[right_child] < data[min_index]:
+        min_index = right_child
 
     if i != min_index:
         swaps.append((i, min_index))
         data[i], data[min_index] = data[min_index], data[i]
-        shift_down(min_index, data, swaps)
-
+        sift_down(min_index, data, swaps)
 
 
 def main():
+    input_type = input().strip()
+
+    if input_type == 'I':
+        n = int(input())
+        data = list(map(int, input().split()))
+        assert len(data) == n
+        assert len(data) == len(set(data))
+        swaps = build_heap(data)
+
+    elif input_type == 'F':
+        with open('input.txt', 'r') as f:
+            n = int(f.readline().strip())
+            data = list(map(int, f.realine().strip().split()))
+            assert len(data) == n
+            assert len(data) == len(set(data))
+            swaps = build_heap(data)
+            with open('output.txt', 'w') as out_f:
+                out_f.write(str(len(swaps)) + '\n')
+                for i, j in swaps:
+                    out_f.write(str(i) + ' ' + str(j) + '\n')
     
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
-
-
-    # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
-    heap_type = input("Enter F for max-heap or I for min-heap: ").strip().upper()
-
-    # checks if lenght of data is the same as the said lenght
-    assert 1 <= n <= 100000
-    assert len(data) == n
-    assert all(0 <=  x <= 10**9 for x in data)
-    assert heap_type in ['F', 'I']
-
-    # calls function to assess the data 
-    # and give back all swaps
-    swaps = build_heap(data)
-    assert len(swaps) <= 4 * n
-
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
-
-
-    # output all swaps
-    print(len(swaps))
-    for i, j in swaps:
-        print(i, j)
-
-
+    
 if __name__ == "__main__":
     main()
