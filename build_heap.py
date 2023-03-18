@@ -1,23 +1,29 @@
 #python3
 
+def heapify(data, i, n, swaps):
+    smallest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < n and data[l] < data[smallest]:
+        smallest = l
+
+    if r < n and data[r] < data[smallest]:
+        smallest = r
+
+    if smallest != i:
+        data[i], data[smallest] = data[smallest], data[i]
+        swaps.append((i, smallest))
+        heapify(data, smallest, n, swaps)
+
+
 def build_heap(data):
-    swaps = []
+
     n = len(data)
+    swaps = []
+
     for i in range(n // 2, -1, -1):
-        while True:
-            left_child = 2*i+1
-            right_child = 2*i+2
-            if left_child < n and data[left_child] < data[i]:
-                min_inx = left_child
-            else:
-                min_inx = i
-            if right_child < n and data[right_child] < data[min_inx]:
-                min_inx = right_child
-            if min_inx == i:
-                break
-            swaps.append((i, min_inx))
-            data[i], data[min_inx] = data[min_inx], data[i]
-            i = min_inx
+        heapify(data, i, n, swaps)
 
     return swaps
 
@@ -28,33 +34,34 @@ def build_heap(data):
 def main():
 
     input_type = input("Enter I for keyboard input or F for file input: ").strip()
-    if input_type.lower() == 'f':
+
+    if input_type.lower() == 'i':
+        n = int(input())
+        data = list(map(int, input().split()))
+
+    elif input_type.lower() == 'f':
         file_name = input("Enter file name: ").strip()
         try:
             with open(file_name, "r") as f:
                 n = int(f.readline().strip())
                 data = list(map(int, f.readline().split()))
-                swaps = build_heap(data)
-                print(len(swaps))
-                for i, j in swaps:
-                    print(i, j)
+
         except OSError as e:
             print(e)
+            return
 
-    if input_type.lower() == 'i':
-        n = int(input())
-        data = list(map(int, input().split()))
-        
-    assert len(data) == n
+    else:
+        print("Invalid input type")
+        return
 
-
+    assert len(data) == n, "Data length does not match input size"
+    assert len(data) == len(set(data)), "Input data contains duplicates"
 
     swaps = build_heap(data)
 
 
     print(len(swaps))
-
-
+    assert len(swaps) <= 4 * n, "Number of swaps exceeds 4n"
 
     for i, j in swaps:
         print(i, j)
