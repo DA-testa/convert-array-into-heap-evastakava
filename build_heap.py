@@ -32,11 +32,11 @@ def main():
         print("Invalid input type")
         return
     #
-    if input_type == 'I':
+    if input_type.lower == 'i':
         n = int(input())
         data = list(map(int, input().split()))
 
-    elif input_type == 'F':
+    elif input_type.lower == 'F':
         file_name = input("Enter file name: ")
 
         with open(file_name, "r") as f:
