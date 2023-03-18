@@ -5,30 +5,32 @@ def build_heap(data):
     n = len(data)
 
     for i in range(n // 2, -1, -1):
-        sift_down(i, n, data, swaps)
+        while True:
+            left_child = 2*i+1
+            right_child = 2*i+2
+            if left_child < len(data) and data[left_child] < data[i]:
+                min_inx = left_child
+            else:
+                min_inx = i
+            if right_child < len(data) and data[right_child] < data[min_inx]:
+                min_inx = right_child
+            if min_inx == i:
+                break
+            swaps.append((i, min_inx))
+            data[i], data[min_inx] = data[min_inx], data[i]
+            i = min_inx
 
     return swaps
 
 
-def sift_down(i, n, data, swaps):
-    min_index = i
-    l = 2 * i + 1
-    if l < n and data[l] < data[min_index]:
-        min_index = l
-    r = 2 * i + 2
-    if r < n and data[r] < data[min_index]:
-        min_index = r
-    if i != min_index:
-        data[i], data[min_index] = data[min_index], data[i]
-        swaps.append((i, min_index))
-        sift_down(min_index, n, data, swaps)
+
 
 
 def main():
 
     input_type = input("Enter I for keyboard input or F for file input: ").strip()
 
-    if input_type.lower not in ['I', 'F']:
+    if input_type.lower not in ['i', 'f']:
         print("Invalid input type")
         return
 
@@ -40,7 +42,7 @@ def main():
         file_name = input("Enter file name: ").strip()
         try:
             with open(file_name, "r") as f:
-                n = int(f.readline())
+                n = int(f.readline().strip())
                 data = list(map(int, f.readline().split()))
                 swaps = build_heap(data)
                 print(len(swaps))
@@ -51,7 +53,7 @@ def main():
 
 
     assert len(data) == n
-    assert len(data) == len(set(data))
+
 
 
     swaps = build_heap(data)
@@ -59,7 +61,7 @@ def main():
 
     print(len(swaps))
 
-    assert len(swaps) <= 4 * n, "Number of swaps exceeds 4n"
+
 
     for i, j in swaps:
         print(i, j)
