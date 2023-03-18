@@ -29,8 +29,6 @@ def build_heap(data):
 
 
 
-
-
 def main():
 
     input_type = input("Enter I for keyboard input or F for file input: ").strip()
