@@ -47,9 +47,9 @@ def main():
                 data = list(map(int, f.readline().split()))
 
         except OSError as e:
-            print(e)
+            print(f"Error: {e}")
             return
-
+        
     else:
         print("Invalid input type")
         return
