@@ -2,9 +2,7 @@
 
 def build_heap(data):
     swaps = []
-    n = len(data)
-
-    for i in range(n // 2, -1, -1):
+    for i in range(len(data) // 2, -1, -1):
         while True:
             left_child = 2*i+1
             right_child = 2*i+2
@@ -27,18 +25,9 @@ def build_heap(data):
 
 
 def main():
-
+    
     input_type = input("Enter I for keyboard input or F for file input: ").strip()
-
-    if input_type.lower not in ['i', 'f']:
-        print("Invalid input type")
-        return
-
-    if input_type.lower() == 'i':
-        n = int(input())
-        data = list(map(int, input().split()))
-
-    elif input_type.lower() == 'f':
+    if input_type.lower() == 'f':
         file_name = input("Enter file name: ").strip()
         try:
             with open(file_name, "r") as f:
@@ -51,7 +40,10 @@ def main():
         except OSError as e:
             print(e)
 
-
+    if input_type.lower() == 'i':
+        n = int(input())
+        data = list(map(int, input().split()))
+        
     assert len(data) == n
 
 
