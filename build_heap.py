@@ -25,6 +25,7 @@ def sift_down(i, n, data, swaps):
 
 
 def main():
+    input_type = input().strip()
     #
     input_type = input("Enter I for keyboard input or F for file input: ")
     #
@@ -57,6 +58,6 @@ def main():
     for i, j in swaps:
         print(i, j)
 
-        
+
 if __name__ == "__main__":
     main()
