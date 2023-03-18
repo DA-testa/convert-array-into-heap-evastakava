@@ -52,14 +52,14 @@ def main():
         print("Invalid input type")
         return
 
-    assert len(data) == n, "Data length does not match input size"
-    assert len(data) == len(set(data)), "Input data contains duplicates"
+    assert len(data) == n
+    assert len(data) == len(set(data))
 
     swaps = build_heap(data)
 
 
     print(len(swaps))
-    assert len(swaps) <= 4 * n, "Number of swaps exceeds 4n"
+    assert len(swaps) <= 4 * n
 
     for i, j in swaps:
         print(i, j)
