@@ -23,14 +23,11 @@ def sift_down(i, n, data, swaps):
         swaps.append((i, min_index))
         sift_down(min_index, n, data, swaps)
 
-def main():
 
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
+def main():
+    #
     input_type = input("Enter I for keyboard input or F for file input: ")
-    
-    # input from keyboard
+    #
     if input_type == 'I':
         n = int(input())
         data = list(map(int, input().split()))
@@ -45,7 +42,7 @@ def main():
     else:
         print("Invalid input type")
         return
-
+    
 
     assert len(data) == n
     assert len(data) == len(set(data))
@@ -60,6 +57,6 @@ def main():
     for i, j in swaps:
         print(i, j)
 
-
+        
 if __name__ == "__main__":
     main()
