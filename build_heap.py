@@ -36,34 +36,46 @@ def main():
     if input_type == 'I':
         n = int(input())
         data = list(map(int, input().split()))
+
     elif input_type == 'F':
         file_name = input("Enter file name: ")
-        with open(file_name, "r") as f:
-            n = int(f.readline())
-            data = list(map(int, f.readline().split()))
+        try:
+            with open(file_name, "r") as f:
+                n = int(f.readline())
+                data = list(map(int, f.readline().split()))
+
+        except:
+            print("Error reading or parsing file")
+            return
 
     else:
         print("Invalid input type")
         return
 
     # checks if lenght of data is the same as the said lenght
-    assert len(data) == n
-    assert len(data) == len(set(data))
+    if len(data) != n:
+        print("Number of elements does not match stated lenght")
+        return
+    if len(data) != len(set(data)):
+        print("Duplicate elements found in data")
+        return
 
     # calls function to assess the data 
     # and give back all swaps
     swaps = build_heap(data)
 
     # TODO: output how many swaps were made, 
-    print(len(swaps))
-    # this number should be less than 4n (less than 4*len(data))
-    assert len(swaps) <= 4*n, "Number of swaps exceeds 4n"
+    print(f"Number of swaps made: {len(swaps)}")
 
+    # this number should be less than 4n (less than 4*len(data))
+    if len(swaps) > 4*n:
+        print("Number of swaps exceeds 4n")
+        return
 
     # output all swaps
-    print(len(swaps))
+
     for i, j in swaps:
-        print(i, j)
+        print(f"Swaps {i} with {j}")
 
 if __name__ == "__main__":
     main()
