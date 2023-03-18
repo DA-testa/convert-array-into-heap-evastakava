@@ -37,11 +37,18 @@ def main():
         data = list(map(int, input().split()))
 
     elif input_type.lower() == 'f':
-        file_name = input("Enter file name: ")
+        file_name = input("Enter file name: ").strip()
+        try:
+            with open(file_name, "r") as f:
+                n = int(f.readline())
+                data = list(map(int, f.readline().split()))
+                swaps = build_heap(data)
+                print(len(swaps))
+                for i, j in swaps:
+                    print(i, j)
+        except OSError as e:
+            print(e)
 
-        with open(file_name, "r") as f:
-            n = int(f.readline())
-            data = list(map(int, f.readline().split()))
 
     assert len(data) == n
     assert len(data) == len(set(data))
@@ -51,7 +58,7 @@ def main():
 
 
     print(len(swaps))
-    
+
     assert len(swaps) <= 4 * n, "Number of swaps exceeds 4n"
 
     for i, j in swaps:
