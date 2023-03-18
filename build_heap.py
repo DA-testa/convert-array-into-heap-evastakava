@@ -26,9 +26,9 @@ def sift_down(i, n, data, swaps):
 
 def main():
 
-    input_type = input("Enter I for keyboard input or F for file input: ")
+    input_type = input("Enter I for keyboard input or F for file input: ").strip()
 
-    if input_type not in ['I', 'F']:
+    if input_type.lower not in ['I', 'F']:
         print("Invalid input type")
         return
 
@@ -51,6 +51,7 @@ def main():
 
 
     print(len(swaps))
+    
     assert len(swaps) <= 4 * n, "Number of swaps exceeds 4n"
 
     for i, j in swaps:
