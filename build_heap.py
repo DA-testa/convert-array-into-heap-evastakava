@@ -25,18 +25,18 @@ def sift_down(i, n, data, swaps):
 
 
 def main():
-    #
+
     input_type = input("Enter I for keyboard input or F for file input: ")
 
     if input_type not in ['I', 'F']:
         print("Invalid input type")
         return
-    #
-    if input_type.lower == 'i':
+
+    if input_type.lower() == 'i':
         n = int(input())
         data = list(map(int, input().split()))
 
-    elif input_type.lower == 'F':
+    elif input_type.lower() == 'f':
         file_name = input("Enter file name: ")
 
         with open(file_name, "r") as f:
