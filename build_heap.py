@@ -40,9 +40,9 @@ def main():
     elif input_type.lower() == 'f':
         file_name = input("Enter file name: ").strip()
         try:
-            with open(file_name, "r") as f:
-                n = int(f.readline().strip())
-                data = list(map(int, f.readline().split()))
+                file_name = open("./tests/" + file_name, mode = "r")
+                n = int(file_name.readline().strip())
+                data = list(map(int, file_name.readline().split()))
 
         except OSError as e:
             print(f"Error: {e}")
