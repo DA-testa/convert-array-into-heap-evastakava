@@ -2,15 +2,16 @@
 
 def build_heap(data):
     swaps = []
-    for i in range(len(data) // 2, -1, -1):
+    n = len(data)
+    for i in range(n // 2, -1, -1):
         while True:
             left_child = 2*i+1
             right_child = 2*i+2
-            if left_child < len(data) and data[left_child] < data[i]:
+            if left_child < n and data[left_child] < data[i]:
                 min_inx = left_child
             else:
                 min_inx = i
-            if right_child < len(data) and data[right_child] < data[min_inx]:
+            if right_child < n and data[right_child] < data[min_inx]:
                 min_inx = right_child
             if min_inx == i:
                 break
@@ -25,7 +26,7 @@ def build_heap(data):
 
 
 def main():
-    
+
     input_type = input("Enter I for keyboard input or F for file input: ").strip()
     if input_type.lower() == 'f':
         file_name = input("Enter file name: ").strip()
